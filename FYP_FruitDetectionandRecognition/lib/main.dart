@@ -81,19 +81,26 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     setState(() {
+      double maxConfidence = recognitions[0]['confidence'];
       String fullLabel = recognitions[0]['label'].toString();
-      List<String> labelParts = fullLabel.split(' ');
 
-      if (labelParts.length > 1) {
-        ripenessStatus = labelParts[0];
-        fruitName = labelParts.sublist(1).join(' ');
-      } else {
-        fruitName = fullLabel; // In case the label doesn't contain a space
+      if (maxConfidence < 0.5) {
+        fruitName = 'Not a fruit';
         ripenessStatus = '';
+      } else {
+        List<String> labelParts = fullLabel.split(' ');
+
+        if (labelParts.length > 1) {
+          ripenessStatus = labelParts[0];
+          fruitName = labelParts.sublist(1).join(' ');
+        } else {
+          fruitName = fullLabel; // In case the label doesn't contain a space
+          ripenessStatus = '';
+        }
       }
 
       detectionHistory.add({
-        'label': fullLabel,
+        'label': fruitName,
         'imagePath': image.path,
       });
     });
@@ -126,19 +133,26 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     setState(() {
+      double maxConfidence = recognitions[0]['confidence'];
       String fullLabel = recognitions[0]['label'].toString();
-      List<String> labelParts = fullLabel.split(' ');
 
-      if (labelParts.length > 1) {
-        ripenessStatus = labelParts[0];
-        fruitName = labelParts.sublist(1).join(' ');
-      } else {
-        fruitName = fullLabel; // In case the label doesn't contain a space
+      if (maxConfidence < 0.4) {
+        fruitName = 'Not a fruit';
         ripenessStatus = '';
+      } else {
+        List<String> labelParts = fullLabel.split(' ');
+
+        if (labelParts.length > 1) {
+          ripenessStatus = labelParts[0];
+          fruitName = labelParts.sublist(1).join(' ');
+        } else {
+          fruitName = fullLabel; // In case the label doesn't contain a space
+          ripenessStatus = '';
+        }
       }
 
       detectionHistory.add({
-        'label': fullLabel,
+        'label': fruitName,
         'imagePath': image.path,
       });
     });
@@ -355,7 +369,7 @@ class _MyHomePageState extends State<MyHomePage> {
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 16),
-                          fruitName.isNotEmpty
+                          fruitName.isNotEmpty && fruitName != 'Not a fruit'
                               ? ElevatedButton(
                             onPressed: showFruitInformation,
                             child: Text('More Information'),
