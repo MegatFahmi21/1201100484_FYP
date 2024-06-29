@@ -11,7 +11,7 @@ This is my file for development of my mobile application. All of the source code
 
 3. (CNN_MobileNetV2.ipynb)
 
-This is the file of the development of my model.
+This is the file of the development of my model. This is the model I used for my mobile application.
 
 4. (fruitmodel.tflite)
 
